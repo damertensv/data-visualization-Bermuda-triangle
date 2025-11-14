@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Shipwrecks D3 Panel</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="controls">
+      <label>From <input id="fromYear" type="number" /></label>
+      <label>To <input id="toYear" type="number" /></label>
+      <label><input id="showTotal" type="checkbox" checked /> total</label>
+      <label><input id="showIn" type="checkbox" checked /> in Bermuda</label>
+      <label><input id="showOut" type="checkbox" checked /> outside Bermuda</label>
+      <label><input id="normalize" type="checkbox" /> normalize</label>
+    </div>
+    <div id="stats"></div>
+    <svg id="chart" width="760" height="420"></svg>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

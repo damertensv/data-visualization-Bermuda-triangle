@@ -1,0 +1,4 @@
+body { font: 12px system-ui, sans-serif; margin: 20px; }
+.controls { margin-bottom: 8px; display: grid; grid-auto-flow: column; gap: 12px; align-items: center; }
+svg { overflow: visible; border: 1px solid #ddd; }
+.legend { font-size: 11px; }
