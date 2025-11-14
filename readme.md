@@ -48,5 +48,12 @@ Open the printed URL (typically http://localhost:5173).
   - `src/main.ts` — D3 chart + interactions.
   - `data/timeseries.csv` — input data produced by the notebook.
 
+## References
+[1] Harris, J. (2022). What’s Really Happening in the Bermuda Triangle. https://www.youtube.com/watch?v=112H-vY4Wdo
+
+[2] Google Sheets document. (n.d.). Retrieved November 14, 2025, from https://docs.google.com/spreadsheets/d/1ltkrhYTku7iOa_fcJFvJCQKWPjSoXTARmkMIkETZ7u0/edit?usp=sharing
+
+[3] Natural Earth. (n.d.). Natural Earth: Free vector and raster map data. Retrieved November 14, 2025, from https://www.naturalearthdata.com/
+
 ## Language model disclosure
-This file, `readme.md` was written with the assistance of OpenAI's GPT-5 through the GitHub Copilot interface.
+This file, `readme.md`, was written with the assistance of OpenAI's GPT-5 through the GitHub Copilot interface.
