@@ -57,3 +57,14 @@ Open the printed URL (typically http://localhost:5173).
 
 ## Language model disclosure
 This file, `readme.md`, was written with the assistance of OpenAI's GPT-5 through the GitHub Copilot interface.
+
+## Datasets
+The shipwrecks dataset [1] was published by the YouTuber, Johnny Harris, alongside a video discussing the myth around the Bermuda Triangle. As per the video's sources, the dataset [1] is a cleaned version of the original [2].
+
+In an effor to fuse the shipwrecks dataset [1] with additional features, I used parts of the Natural Earth dataset [3]. The fused data can be found inside _this_ repository.
+
+1. Google Sheets document. (n.d.). Retrieved November 14, 2025, from https://docs.google.com/spreadsheets/d/1ltkrhYTku7iOa_fcJFvJCQKWPjSoXTARmkMIkETZ7u0/edit?usp=sharing
+
+2. United States Coast Guard, Office of Investigations & Casualty Analysis. (n.d.). Marine Casualty and Pollution Data for Researchers. U.S. Coast Guard website. Retrieved November 14, 2025, from https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Prevention-Policy-CG-5P/Inspections-Compliance-CG-5PC-/Office-of-Investigations-Casualty-Analysis/Marine-Casualty-and-Pollution-Data-for-Researchers/
+
+3. Patterson, T., & Kelso, N. V. (2024). Natural Earth. North American Cartographic Information Society (NACIS). https://www.naturalearthdata.com/
