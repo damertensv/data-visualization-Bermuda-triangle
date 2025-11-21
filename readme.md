@@ -68,3 +68,6 @@ In an effor to fuse the shipwrecks dataset [1] with additional features, I used 
 2. United States Coast Guard, Office of Investigations & Casualty Analysis. (n.d.). Marine Casualty and Pollution Data for Researchers. U.S. Coast Guard website. Retrieved November 14, 2025, from https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Prevention-Policy-CG-5P/Inspections-Compliance-CG-5PC-/Office-of-Investigations-Casualty-Analysis/Marine-Casualty-and-Pollution-Data-for-Researchers/
 
 3. Patterson, T., & Kelso, N. V. (2024). Natural Earth. North American Cartographic Information Society (NACIS). https://www.naturalearthdata.com/
+
+## Update!!!
+Renamed "site" to "timeseries-site" and added "worldmap-site" to extend the timeseries analysis to regions of the world.
