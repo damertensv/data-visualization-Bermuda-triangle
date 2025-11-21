@@ -1,30 +1,26 @@
 import * as d3 from "d3";
 
-// --- Types ---
 type Wreck = {
   lat: number;
   lon: number;
   year: number;
 };
 
-// --- Constants ---
 const WIDTH = 600;
 const HEIGHT = 600;
 const TRIANGLE_COORDS = [
   [-80.19, 25.774],
   [-66.105, 18.466],
   [-64.75, 32.3078],
-  [-80.19, 25.774] // Close the loop
+  [-80.19, 25.774]
 ];
 
-// --- Elements ---
 const svg = d3.select("#map").attr("width", WIDTH).attr("height", HEIGHT);
 const canvas = document.getElementById("heatmap") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d")!;
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
 
-// Inputs
 const els = {
   lat: document.getElementById("lat") as HTMLInputElement,
   lon: document.getElementById("lon") as HTMLInputElement,
@@ -48,14 +44,10 @@ const els = {
   valRes: document.getElementById("val-res")!,
 };
 
-// --- State ---
 let wrecks: Wreck[] = [];
 let worldData: any = null;
 
-// --- Initialization ---
 async function init() {
-  // 1. Load Data
-  // Reading from "data/" relative to the web root
   const rawWrecks = await d3.csv("data/wrecks.csv"); 
   wrecks = rawWrecks
     .map(d => ({
@@ -67,7 +59,6 @@ async function init() {
 
   worldData = await d3.json("data/countries.json");
 
-  // 2. Set Input Defaults based on Data
   const years = wrecks.map(d => d.year);
   const minYear = d3.min(years) || 1900;
   const maxYear = d3.max(years) || 2020;
@@ -84,7 +75,6 @@ async function init() {
   els.maxDist.value = "2.0";
   els.resolution.value = "50";
 
-  // Utility: Debounce
   function debounce(fn: Function, ms: number) {
     let timer: number;
     return (...args: any[]) => {
@@ -95,18 +85,14 @@ async function init() {
 
   const debouncedUpdate = debounce(update, 15);
 
-  // 3. Attach Listeners
   Object.values(els).forEach(el => {
     if (el instanceof HTMLInputElement) {
       el.addEventListener("input", debouncedUpdate);
     }
   });
 
-  // 4. Initial Draw
   update();
 }
-
-// --- Core Logic ---
 
 function proportionGrid(
   xMin: number, xMax: number, yMin: number, yMax: number,
@@ -123,7 +109,6 @@ function proportionGrid(
   const yStep = (yMax - yMin) / res;
   const maxDistSq = maxDist * maxDist;
 
-  // Optimization: Pre-filter wrecks to viewport + margin
   const margin = maxDist * 2;
   const relevantWrecks = wrecks.filter(w => 
     w.lon >= xMin - margin && w.lon <= xMax + margin &&
@@ -134,11 +119,9 @@ function proportionGrid(
 
   for (let j = 0; j < res; j++) {
     for (let i = 0; i < res; i++) {
-      // Grid point coordinates
       const cx = xMin + i * xStep;
       const cy = yMin + j * yStep;
 
-      // Calculate squared distances
       const dists = relevantWrecks.map(w => {
         const dx = cx - w.lon;
         const dy = cy - w.lat;
@@ -148,9 +131,6 @@ function proportionGrid(
         };
       });
       
-      // Find K nearest
-      // Partial sort optimization: we only need the top K. 
-      // For JS, full sort is often fast enough for N < 5000.
       dists.sort((a, b) => a.dSq - b.dSq);
       
       const nearest = dists.slice(0, k);
@@ -169,7 +149,6 @@ function proportionGrid(
 
       const prop = validCount > 0 ? inWindowCount / validCount : 0;
       
-      // Map to image data (origin bottom-left for map, top-left for image)
       const pixelIndex = ((res - 1 - j) * res + i) * 4;
       
       if (validCount === 0) {
@@ -179,7 +158,7 @@ function proportionGrid(
         imgData.data[pixelIndex] = c.r;
         imgData.data[pixelIndex + 1] = c.g;
         imgData.data[pixelIndex + 2] = c.b;
-        imgData.data[pixelIndex + 3] = 150; // Alpha
+        imgData.data[pixelIndex + 3] = 150;
       }
     }
   }
@@ -189,7 +168,6 @@ function proportionGrid(
 }
 
 function update() {
-  // 1. Read Inputs
   const lat = parseFloat(els.lat.value);
   const lon = parseFloat(els.lon.value);
   const zoom = parseFloat(els.zoom.value);
@@ -202,7 +180,6 @@ function update() {
   const maxDist = parseFloat(els.maxDist.value);
   const res = parseInt(els.resolution.value);
 
-  // Update Labels
   els.valLat.textContent = lat.toFixed(2);
   els.valLon.textContent = lon.toFixed(2);
   els.valZoom.textContent = zoom.toFixed(2);
@@ -211,7 +188,6 @@ function update() {
   els.valDist.textContent = maxDist.toFixed(2);
   els.valRes.textContent = String(res);
 
-  // 2. Setup Projection
   const margin = 100 * (1 / zoom);
   const xMin = lon - margin;
   const xMax = lon + margin;
@@ -227,10 +203,8 @@ function update() {
 
   const path = d3.geoPath().projection(projection);
 
-  // 3. Draw SVG Layers
   svg.selectAll("*").remove();
 
-  // Countries
   if (worldData) {
     svg.append("g")
       .selectAll("path")
@@ -242,7 +216,6 @@ function update() {
       .attr("stroke-width", 0.5);
   }
 
-  // Triangle
   if (els.showTriangle.checked) {
     const triangleGeo = {
       type: "Polygon",
@@ -256,7 +229,6 @@ function update() {
       .attr("stroke-width", 2);
   }
 
-  // Wrecks
   if (els.showWrecks.checked) {
     const visibleWrecks = wrecks.filter(d => 
       d.year >= y1 && d.year <= y2 &&
@@ -275,7 +247,6 @@ function update() {
       .attr("opacity", 0.6);
   }
 
-  // 4. Draw Heatmap (Canvas)
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   
   if (els.showOverlay.checked) {
