@@ -208,3 +208,5 @@ timeseries-site/node_modules/
 timeseries-site/package-lock.json
 worldmap-site/node_modules/
 worldmap-site/package-lock.json
+site/front/node_modules/
+site/front/package-lock.json
